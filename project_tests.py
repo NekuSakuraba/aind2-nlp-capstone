@@ -9,10 +9,12 @@ def _test_model(model, input_shape, output_sequence_length, french_vocab_size):
     if isinstance(model, Sequential):
         model = model.model
 
-    assert model.input_shape == (None, *input_shape[1:]),\
+    assert model.input_shape == (None, *input_shape[1:]) or \
+        (None, *input_shape[1:]) in model.input_shape,\
         'Wrong input shape. Found input shape {} using parameter input_shape={}'.format(model.input_shape, input_shape)
 
-    assert model.output_shape == (None, output_sequence_length, french_vocab_size),\
+    assert model.output_shape == (None, output_sequence_length, french_vocab_size) or \
+        model.output_shape == (None, output_sequence_length, french_vocab_size+1),\
         'Wrong output shape. Found output shape {} using parameters output_sequence_length={} and french_vocab_size={}'\
             .format(model.output_shape, output_sequence_length, french_vocab_size)
 
